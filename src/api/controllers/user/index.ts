@@ -1,0 +1,15 @@
+export {
+  changePassword,
+  createuser,
+  deactivateAccount,
+  deleteUser,
+  deleteUserAccount,
+  followUser,
+  getNewRefreshToken,
+  getSavedPost,
+  loginuser,
+  savePost,
+  sendEmailVerification,
+  updateUser,
+  verifyEmail,
+} from "./auth.controller";
