@@ -6,8 +6,8 @@ export interface IComment extends mongoose.Document {
   admin: Types.ObjectId;
   comment: string;
   reply: string;
-  upVote: Types.ObjectId[];
-  downVote: Types.ObjectId[];
+  upVotes: Types.ObjectId[];
+  downVotes: Types.ObjectId[];
 }
 
 const commentSchema = new Schema<IComment>(
@@ -24,13 +24,13 @@ const commentSchema = new Schema<IComment>(
       type: String,
       required: true,
     },
-    upVote: [
+    upVotes: [
       {
         type: Schema.Types.ObjectId,
         ref: "User",
       },
     ],
-    downVote: [
+    downVotes: [
       {
         type: Schema.Types.ObjectId,
         ref: "User",
