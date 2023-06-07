@@ -1,10 +1,13 @@
 import { Router } from "express";
 
 import userAuthRoutes from "./user/auth.routes";
-import forumRoutes from "./forum/forum.routes";
+import postRoutes from "./post/post.routes";
+import commentRoutes from "./comment/comment.routes";
 const router = Router();
 router.use("/auth", userAuthRoutes);
 
-router.use("/forum", forumRoutes);
+router.use("/post", postRoutes);
+
+router.use("/comment", commentRoutes);
 
 export default router;

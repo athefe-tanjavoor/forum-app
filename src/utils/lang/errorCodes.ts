@@ -55,9 +55,11 @@ export default {
   "00023": "Group does not exist",
   // Post
   "00029": "post does not belong to you",
+  "00039": "post does not exist",
 
   // Comment
   "00030": "Comment does not belong to you",
+  "00040": "Comment does not exist",
 
   // Status
   "00031": "Status does not belong to you",

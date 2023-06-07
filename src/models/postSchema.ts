@@ -1,10 +1,10 @@
 import { type Types } from "mongoose";
 import mongoose, { model, Schema } from "mongoose";
 
-export interface IForum extends mongoose.Document {
+export interface IPost extends mongoose.Document {
   admin: Types.ObjectId;
   ForumName: string;
-  description: string;
+  content: string;
   category:
     | "EDUCATION"
     | "TECHNOLOGY"
@@ -21,28 +21,22 @@ export interface IForum extends mongoose.Document {
   downvotes: Types.ObjectId[];
   forumMembers: Types.ObjectId[];
   retweets: Types.ObjectId[];
+  views: Types.ObjectId[];
   saveForum: Types.ObjectId[];
   location: string;
   ForumRules: string;
-  isPrivate: boolean;
   created_at: Date;
   updated_at: Date;
 }
 
-const forumSchema = new Schema<IForum>(
+const postSchema = new Schema<IPost>(
   {
     admin: {
       type: Schema.Types.ObjectId,
       ref: "User",
       required: true,
     },
-    ForumName: {
-      type: String,
-      required: true,
-      minlength: 1,
-      maxlength: 100,
-    },
-    description: {
+    content: {
       type: String,
       required: true,
       minlength: 1,
@@ -83,23 +77,10 @@ const forumSchema = new Schema<IForum>(
         ref: "User",
       },
     ],
-    upvotes: [
+    views: [
       {
         type: Schema.Types.ObjectId,
         ref: "User",
-      },
-    ],
-    downvotes: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: "User",
-      },
-    ],
-    forumMembers: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: "User",
-        required: true,
       },
     ],
     retweets: [
@@ -111,24 +92,13 @@ const forumSchema = new Schema<IForum>(
     saveForum: [
       {
         type: Schema.Types.ObjectId,
-        ref: "Forum",
+        ref: "Post",
       },
     ],
-    location: {
-      type: String,
-    },
-    ForumRules: {
-      type: String,
-    },
-
-    isPrivate: {
-      type: Boolean,
-      default: false,
-    },
   },
   {
     timestamps: true,
   }
 );
 
-export default model<IForum>("Forum", forumSchema);
+export default model<IPost>("Post", postSchema);

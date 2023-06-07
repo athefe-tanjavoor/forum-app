@@ -1,3 +1,4 @@
 export { default as User } from "./userSchema";
-export { default as Forum } from "./forumSchema";
+export { default as Post } from "./postSchema";
 export { default as Admin } from "./adminSchema";
+export { default as Comment } from "./commentSchema";

@@ -17,21 +17,13 @@ export interface IUser extends PassportLocalDocument {
   email: string;
   emailVerified: boolean;
   profilepicture: string;
-  coverpicture: string;
   bio: string;
   dob: Date;
   gender?: "MALE" | "FEMALE" | "OTHER";
-  websiteUrl: string;
   followers: Types.ObjectId[];
   following: Types.ObjectId[];
-  tweet: Types.ObjectId[];
-  replies: Types.ObjectId[];
-  media: Types.ObjectId[];
-  likes: Types.ObjectId[];
   authProviders: Array<"GOOGLE" | "LOCAL">;
   isDeleted: boolean;
-  comments: Types.ObjectId[];
-  savedPosts: Types.ObjectId[];
   role: Roles;
   status: "ACTIVE" | "BLOCKED" | "DEACTIVATE" | "DELETED";
   // sessions: Types.DocumentArray<ISession>;
@@ -92,9 +84,6 @@ const userSchema = new Schema(
       type: String,
       enum: ["MALE", "FEMALE", "OTHER"],
     },
-    websiteUrl: {
-      type: String,
-    },
     followers: [
       {
         type: Schema.Types.ObjectId,
@@ -105,24 +94,6 @@ const userSchema = new Schema(
       {
         type: Schema.Types.ObjectId,
         ref: "User",
-      },
-    ],
-    replies: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: "Comment",
-      },
-    ],
-    comments: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: "Forum",
-      },
-    ],
-    savedPosts: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: "validateTweet",
       },
     ],
     role: {

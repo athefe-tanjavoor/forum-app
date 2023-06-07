@@ -3,7 +3,7 @@ import compression from "compression";
 import cors, { type CorsOptions } from "cors";
 import type { Application, Request, Response } from "express";
 import passport from "passport";
-import "../config/strategies/user";
+import "../config/strategies/index";
 import routes from "../api/routes/index";
 import { Env } from "../config";
 

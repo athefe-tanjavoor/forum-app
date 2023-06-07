@@ -6,9 +6,7 @@ import {
   deactivateAccount,
   deleteUserAccount,
   followUser,
-  getSavedPost,
   loginuser,
-  savePost,
   sendEmailVerification,
   verifyEmail,
 } from "../../controllers/user/index";
@@ -19,7 +17,7 @@ const router = express.Router();
 router.get("/", verifyEmail);
 
 // get the SavedPost
-router.get("/:id/savedpost", verifyJWTstrict, getSavedPost);
+// router.get("/:id/savedpost", verifyJWTstrict, getSavedPost);
 
 router.post("/register", createuser);
 router.post(
@@ -41,6 +39,6 @@ router.put("/deactivate", verifyJWTstrict, deactivateAccount);
 router.put("/delete", verifyJWTstrict, deleteUserAccount);
 
 // save the posts
-router.put("/:id/savepost", verifyJWTstrict, savePost);
+// router.put("/:id/savepost", verifyJWTstrict, savePost);
 
 export default router;

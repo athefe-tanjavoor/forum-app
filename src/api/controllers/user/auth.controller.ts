@@ -1,6 +1,6 @@
 import { type Request, type Response } from "express";
 
-import { Forum, User } from "../../../models";
+import { User } from "../../../models";
 import { resHandler } from "../../../utils";
 // import { OTP_PURPOSE } from "../../../utils/constants";
 import { sendEmail } from "../../../utils/helpers/email-helper";
@@ -424,44 +424,44 @@ async function deactivateAccount(req: Request, res: Response) {
   } catch (err: any) {
     return res.status(500).json(resHandler(req, null, err.message, "00008"));
   }
-}
+  // }
 
-async function savePost(req: Request, res: Response) {
-  try {
-    console.log("savePost");
-    const user = await User.findById(req.user._id);
-    if (!user) {
-      return res.status(404).json({ message: "user not found" });
-    }
-    if (
-      user?.savedPosts.findIndex((x) => x.toString() === req.params.id) === -1
-    ) {
-      await User?.updateOne({ $push: { savedPosts: req.params.id } });
-      res.json({ message: "you saved this post" });
-    } else {
-      await User.updateOne({ $pull: { savedPosts: req.params.id } });
-      return res.status(200).json({ message: "You unsaved this post" });
-    }
-  } catch (err: any) {
-    return res.status(500).json(resHandler(req, null, err.message, "00008"));
-  }
-}
-async function getSavedPost(req: Request, res: Response) {
-  try {
-    const user = await User.findById(req.params.id);
-    if (!user) {
-      return res.status(404).json({ message: "user not found" });
-    }
-    if (user?._id.toString() === req.user._id) {
-      await Forum.find({ _id: user._id });
-      return res.status(200).json(user);
-    }
-    return res
-      .status(401)
-      .json(resHandler(req, null, "Account does not belong to you", "00021"));
-  } catch (err: any) {
-    return res.status(500).json(resHandler(req, null, err.message, "00008"));
-  }
+  // async function savePost(req: Request, res: Response) {
+  //   try {
+  //     console.log("savePost");
+  //     const user = await User.findById(req.user._id);
+  //     if (!user) {
+  //       return res.status(404).json({ message: "user not found" });
+  //     }
+  //     if (
+  //       user?.savedPosts.findIndex((x) => x.toString() === req.params.id) === -1
+  //     ) {
+  //       await User?.updateOne({ $push: { savedPosts: req.params.id } });
+  //       res.json({ message: "you saved this post" });
+  //     } else {
+  //       await User.updateOne({ $pull: { savedPosts: req.params.id } });
+  //       return res.status(200).json({ message: "You unsaved this post" });
+  //     }
+  //   } catch (err: any) {
+  //     return res.status(500).json(resHandler(req, null, err.message, "00008"));
+  //   }
+  // }
+  // async function getSavedPost(req: Request, res: Response) {
+  //   try {
+  //     const user = await User.findById(req.params.id);
+  //     if (!user) {
+  //       return res.status(404).json({ message: "user not found" });
+  //     }
+  //     if (user?._id.toString() === req.user._id) {
+  //       await Forum.find({ _id: user._id });
+  //       return res.status(200).json(user);
+  //     }
+  //     return res
+  //       .status(401)
+  //       .json(resHandler(req, null, "Account does not belong to you", "00021"));
+  //   } catch (err: any) {
+  //     return res.status(500).json(resHandler(req, null, err.message, "00008"));
+  //   }
 }
 // async function verifyEmail(req: Request, res: Response) {
 //   const { token } = req.body;
@@ -503,9 +503,7 @@ export {
   deleteUserAccount,
   followUser,
   getNewRefreshToken,
-  getSavedPost,
   loginuser,
-  savePost,
   sendEmailVerification,
   updateUser,
   verifyEmail,

@@ -1,3 +1,3 @@
-import "./auth";
-import "./admin";
+import "./user/index";
+import "./admin/index";
 import "./jwtStrategy";
