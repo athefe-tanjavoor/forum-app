@@ -230,6 +230,30 @@ async function sendEmailVerification(req: Request, res: Response) {
   }
 }
 
+async function followUser(req: Request, res: Response) {
+  if (req.user._id !== req.params.id) {
+    try {
+      const user = await User.findById(req.params.id);
+      const currentuser = await User.findById(req.user._id);
+      if (
+        user?.followers.findIndex((x) => x.toString() === req.user._id) === -1
+      ) {
+        await user?.updateOne({ $push: { followers: req.user._id } });
+        await currentuser?.updateOne({ $push: { following: req.params.id } });
+        res.status(200).json({ message: "user has been followed" });
+      } else {
+        await user?.updateOne({ $pull: { followers: req.user._id } });
+        await currentuser?.updateOne({ $pull: { following: req.params.id } });
+        res.status(200).json("you unfollowed this user");
+      }
+    } catch (err: any) {
+      return res.status(500).json(resHandler(req, null, err.message, "00008"));
+    }
+  } else {
+    res.status(403).json(resHandler(req, null, "you cant follow u", "00042"));
+  }
+}
+
 async function verifyEmail(req: Request, res: Response) {
   const token = req.query.token as string;
   const decoded = verifyToken(token);
@@ -363,29 +387,6 @@ async function deleteUser(req: Request, res: Response) {
   }
 }
 
-async function followUser(req: Request, res: Response) {
-  if (req.user._id !== req.params.id) {
-    try {
-      const user = await User.findById(req.params.id);
-      const currentuser = await User.findById(req.user._id);
-      if (
-        user?.followers.findIndex((x) => x.toString() === req.user._id) === -1
-      ) {
-        await user?.updateOne({ $push: { followers: req.user._id } });
-        await currentuser?.updateOne({ $push: { following: req.params.id } });
-        res.status(200).json({ message: "user has been followed" });
-      } else {
-        await user?.updateOne({ $pull: { followers: req.user._id } });
-        await currentuser?.updateOne({ $pull: { following: req.params.id } });
-        res.status(200).json("you unfollowed this user");
-      }
-    } catch (err: any) {
-      return res.status(500).json(resHandler(req, null, err.message, "00008"));
-    }
-  } else {
-    res.status(403).json(resHandler(req, null, "you cant follow u", "00042"));
-  }
-}
 async function deleteUserAccount(req: Request, res: Response) {
   try {
     const user = await User.findById(req.params.id);
@@ -424,7 +425,6 @@ async function deactivateAccount(req: Request, res: Response) {
   } catch (err: any) {
     return res.status(500).json(resHandler(req, null, err.message, "00008"));
   }
-  // }
 
   // async function savePost(req: Request, res: Response) {
   //   try {

@@ -61,7 +61,7 @@ const postSchema = new Schema<IPost>(
     comments: [
       {
         type: Schema.Types.ObjectId,
-        ref: "comment",
+        ref: "Comment",
       },
     ],
     video: {
