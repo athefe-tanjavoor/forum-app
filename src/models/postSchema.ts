@@ -44,6 +44,7 @@ const postSchema = new Schema<IPost>(
     },
     category: {
       type: String,
+      required: true,
       enum: [
         "EDUCATION",
         "TECHNOLOGY",
