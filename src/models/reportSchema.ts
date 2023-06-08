@@ -5,7 +5,7 @@ import { model, Schema } from "mongoose";
 interface IReport extends mongoose.Document {
   user: Types.ObjectId;
   report: string;
-  reportType: "User" | "Post" | "Comment" | "Forum";
+  reportType: "User" | "Post" | "Comment" | "Group";
   reportID: Types.ObjectId;
 }
 
@@ -23,7 +23,7 @@ const reportSchema = new Schema<IReport>(
     reportType: {
       type: String,
       required: true,
-      enum: ["User", "Post", "Comment", "Forum"],
+      enum: ["User", "Post", "Comment", "Group"],
     },
     reportID: {
       type: Schema.Types.ObjectId,
